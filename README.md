@@ -29,8 +29,10 @@ To address these issues, this dataset consolidates information on disadvantaged 
     - Binary indicator for disadvantaged community classification
     - Disadvantaged Community (DAC) scores 
 - **Datasets**:
-    - `DAC.csv`: Contains all columns from the three datasets.
-    - `DAC_s.csv`: A shorter version, including socio-demographic indicators and EJ and Supplemental indices (Environmental Justice Screening Tool), disadvantaged community classification (CEJST), and DAC scores (Energy Justice Mapping Tool). 
+    - `results/DAC.csv`: Contains all columns from the three datasets.
+    - `results/DAC_s.csv`: A shorter version, including socio-demographic indicators and EJ and Supplemental indices (Environmental Justice Screening Tool), disadvantaged community classification (CEJST), and DAC scores (Energy Justice Mapping Tool). 
+- **Code**:
+    - `syntax/code.R`: This script illustrates the methodology for merging the three datasets, culminating in the creation of the two CSV files located in the results directory. 
 
 
 ### Purpose:
