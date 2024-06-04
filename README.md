@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11476094.svg)](https://doi.org/10.5281/zenodo.11476094)
 ## Disadvantaged Communities in the U.S.
 
 **Background**: Efforts to support disadvantaged communities have been prioritized through initiatives like Justice40, the Inflation Reduction Act (IRA), and the Bipartisan Infrastructure Law (BIL). Identifying disadvantaged communities involves several datasets with associated variables related to vulnerability indicators and scores. There are three key datasets:
