@@ -37,62 +37,62 @@ library(Hmisc)
 # getOption('timeout')
 # options(timeout=100)
 
-
+# Define folder name
 folder_name <- "./data"
-download_zip <- function(url, folder){
-  zip_file <- paste0(folder_name,"/",folder,".zip")
-  download.file(url, zip_file, mode = "wb")
-  unzip(zip_file, exdir = paste0(folder_name,"/",folder))
+
+# General download function
+download_file <- function(url, folder, file_name = NULL, is_zip = FALSE, extract_nested_zip = FALSE){
+  file_path <- file.path(folder_name, folder)
+  if (!dir.exists(file_path)) dir.create(file_path, recursive = TRUE)
+  file <- ifelse(is.null(file_name), basename(url), file_name)
+  dest_file <- file.path(file_path, file)
+  download.file(url, dest_file, mode = "wb")
+  
+  if (is_zip) {
+    unzip(dest_file, exdir = file_path)
+    
+    nested_zip_file <- list.files(file_path, pattern = ".zip$", full.names = TRUE)
+    if (extract_nested_zip) {
+      if (length(nested_zip_file) > 0) unzip(nested_zip_file %>% tail(n=1), exdir = file_path)
+    }
+    unlink(nested_zip_file)
+  }
 }
 
-download_csv <- function(url, folder){
-  file <- paste0(folder_name,"/",folder,"/",folder,".csv")
-  download.file(url, file, mode = "wb")
-}
-
-#CEJST
+# CEJST
 folder <- "cejst"
-download_csv("https://static-data-screeningtool.geoplatform.gov/data-versions/1.0/data/score/downloadable/1.0-communities.csv",
-             folder)
-download_zip("https://static-data-screeningtool.geoplatform.gov/data-versions/1.0/data/score/downloadable/1.0-shapefile-codebook.zip",
-         folder)
-unzip(paste0(folder_name,"/",folder,"/",list.files(paste0(folder_name,"/",folder)) %>% tail(n = 1)), 
-      exdir = paste0(folder_name,"/",folder))
+download_file("https://static-data-screeningtool.geoplatform.gov/data-versions/1.0/data/score/downloadable/1.0-communities.csv", folder, "1.0-communities.csv")
+download_file("https://static-data-screeningtool.geoplatform.gov/data-versions/1.0/data/score/downloadable/1.0-shapefile-codebook.zip", folder, is_zip = TRUE, extract_nested_zip = TRUE)
 
-cejst <- st_read(paste0(folder_name,"/",folder,"/",
-                        list.files(paste0(folder_name,"/",folder),pattern=".shp"))) %>% 
+cejst_files <- list.files(file.path(folder_name, folder), pattern = ".shp$", full.names = TRUE)
+cejst <- st_read(cejst_files[1]) %>% 
   rename(GEOID = GEOID10) %>%
   dplyr::select(GEOID) %>%
-  left_join(read_csv(file = paste0(folder_name,"/",folder,"/",folder,".csv")) %>%
+  left_join(read_csv(file.path(folder_name, folder, "1.0-communities.csv")) %>% 
               rename(GEOID = `Census tract 2010 ID`), by = "GEOID") %>%
-  dplyr::select(-`County Name`,-`State/Territory`) %>% 
+  dplyr::select(-`County Name`, -`State/Territory`) %>%
   st_transform(4269)
 
-unlink(paste0(folder_name,"/",folder,".zip"))
-
-#DAC
+# DAC
 folder <- "dac"
-download_zip("https://energyjustice.egs.anl.gov/resources/serve/DAC/DAC%20Shapefiles%20(v2022c).zip",
-         folder)
-dac <- st_read(paste0(folder_name,"/",folder,"/",
-                      list.files(paste0(folder_name,"/",folder),pattern=".shp"))) %>% 
-  dplyr::select(GEOID, population:eal_npctl) %>% 
+download_file("https://energyjustice.egs.anl.gov/resources/serve/DAC/DAC%20Shapefiles%20(v2022c).zip", folder, is_zip = TRUE)
+
+dac_files <- list.files(file.path(folder_name, folder), pattern = ".shp$", full.names = TRUE)
+dac <- st_read(dac_files[1]) %>%
+  dplyr::select(GEOID, population:eal_npctl) %>%
   st_transform(4269)
 
-unlink(paste0(folder_name,"/",folder,".zip"))
-
-#EJ
+# EJ
 folder <- "ej"
-download_zip("https://gaftp.epa.gov/EJScreen/2023/2.22_September_UseMe/EJSCREEN_2023_Tracts_with_AS_CNMI_GU_VI.gdb.zip",
-         folder)
-ej <- st_read(paste0(folder_name,"/",folder,"/",
-                     list.files(paste0(folder_name,"/",folder)))) %>% 
+download_file("https://gaftp.epa.gov/EJScreen/2023/2.22_September_UseMe/EJSCREEN_2023_Tracts_with_AS_CNMI_GU_VI.gdb.zip", folder, is_zip = TRUE)
+
+ej_files <- list.files(file.path(folder_name, folder), pattern = ".gdb$", full.names = TRUE)
+ej <- st_read(ej_files[1]) %>%
   dplyr::select(ID, ACSTOTPOP:P_D5_PWDIS) %>%
   rename(GEOID = ID)
 
-unlink(paste0(folder_name,"/",folder,".zip"))
 
-
+# data aggregation
 DAC <- ej %>% 
   dplyr::select(GEOID) %>% 
   st_join(cejst %>% 
