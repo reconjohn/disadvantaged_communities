@@ -65,7 +65,7 @@ download_file("https://static-data-screeningtool.geoplatform.gov/data-versions/1
 download_file("https://static-data-screeningtool.geoplatform.gov/data-versions/1.0/data/score/downloadable/1.0-shapefile-codebook.zip", folder, is_zip = TRUE, extract_nested_zip = TRUE)
 
 cejst_files <- list.files(file.path(folder_name, folder), pattern = ".shp$", full.names = TRUE)
-cejst <- st_read(cejst_files[1]) %>% 
+cejst <- st_read(cejst_files) %>% 
   rename(GEOID = GEOID10) %>%
   dplyr::select(GEOID) %>%
   left_join(read_csv(file.path(folder_name, folder, "1.0-communities.csv")) %>% 
@@ -78,7 +78,7 @@ folder <- "dac"
 download_file("https://energyjustice.egs.anl.gov/resources/serve/DAC/DAC%20Shapefiles%20(v2022c).zip", folder, is_zip = TRUE)
 
 dac_files <- list.files(file.path(folder_name, folder), pattern = ".shp$", full.names = TRUE)
-dac <- st_read(dac_files[1]) %>%
+dac <- st_read(dac_files) %>%
   dplyr::select(GEOID, population:eal_npctl) %>%
   st_transform(4269)
 
@@ -87,7 +87,7 @@ folder <- "ej"
 download_file("https://gaftp.epa.gov/EJScreen/2023/2.22_September_UseMe/EJSCREEN_2023_Tracts_with_AS_CNMI_GU_VI.gdb.zip", folder, is_zip = TRUE)
 
 ej_files <- list.files(file.path(folder_name, folder), pattern = ".gdb$", full.names = TRUE)
-ej <- st_read(ej_files[1]) %>%
+ej <- st_read(ej_files) %>%
   dplyr::select(ID, ACSTOTPOP:P_D5_PWDIS) %>%
   rename(GEOID = ID)
 
