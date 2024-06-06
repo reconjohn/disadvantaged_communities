@@ -28,7 +28,6 @@ library(Hmisc)
 # 
 # 
 
-
 ## download geospatial data from each website
 # for cejst: "https://screeningtool.geoplatform.gov/en/downloads"
 # for dac: "https://energyjustice.egs.anl.gov/"
