@@ -5,7 +5,7 @@
 
 1. [Climate and Economic Justice Screening Tool (CEJST)](https://screeningtool.geoplatform.gov/en/methodology#3/33.47/-97.5) from the White House Council on Environmental Quality (CEQ).
 2. [Energy Justice Mapping Tool](https://energyjustice.egs.anl.gov/) from the Department of Energy (DOE) Office of Economic Impact & Diversity.
-3. [Environmental Justice Screening Tool](https://www.epa.gov/system/files/documents/2023-06/ejscreen-tech-doc-version-2-2.pdf) from the Environmental Protection Agency (EPA) Office of Environmental Justice and External Civil Rights.
+3. [Environmental Justice Screening Tool](https://www.epa.gov/ejscreen/ej-and-supplemental-indexes-ejscreen) from the Environmental Protection Agency (EPA) Office of Environmental Justice and External Civil Rights.
 
 **Problem**:
 1. Each dataset employs similar but distinct criteria and outcomes.
@@ -43,4 +43,4 @@ The dataset aims to help researchers identify overall disadvantaged communities 
 For complete data descriptions and sources, please refer to the original datasets.
 * [Climate and Economic Justice Screening Tool (CEJST)](https://screeningtool.geoplatform.gov/en/methodology#3/33.47/-97.5) 
 * [Energy Justice Mapping Tool](https://energyjustice.egs.anl.gov/) 
-* [Environmental Justice Screening Tool](https://www.epa.gov/system/files/documents/2023-06/ejscreen-tech-doc-version-2-2.pdf) 
+* [Environmental Justice Screening Tool](https://www.epa.gov/ejscreen/ej-and-supplemental-indexes-ejscreen)

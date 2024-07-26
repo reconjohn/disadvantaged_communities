@@ -34,7 +34,7 @@ library(Hmisc)
 # for ej: "https://www.epa.gov/ejscreen/download-ejscreen-data"
 
 # getOption('timeout')
-# options(timeout=100)
+# options(timeout=200)
 
 # Define folder name
 folder_name <- "./data"
@@ -60,7 +60,7 @@ download_file <- function(url, folder, file_name = NULL, is_zip = FALSE, extract
 
 # CEJST
 folder <- "cejst"
-download_file("https://static-data-screeningtool.geoplatform.gov/data-versions/1.0/data/score/downloadable/1.0-communities.csv", folder, "1.0-communities.csv")
+download_file("https://static-data-screeningtool.geoplatform.gov/data-versions/1.0/data/score/downloadable/1.0-communities.csv", folder)
 download_file("https://static-data-screeningtool.geoplatform.gov/data-versions/1.0/data/score/downloadable/1.0-shapefile-codebook.zip", folder, is_zip = TRUE, extract_nested_zip = TRUE)
 
 cejst_files <- list.files(file.path(folder_name, folder), pattern = ".shp$", full.names = TRUE)
